@@ -4,17 +4,173 @@
 <head>
     <title>Konnex Widget</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 </head>
 
 <body>
     <div id="widget-container">
-        <span id="widget-button" onclick="ExpandWidget();"><img id="widget-logo" src="../../logo.jpg "></span>
-        <div id="widget-popup-container"></div>
+
+        <span id="widget-button" onclick="ExpandWidget();"><img id="widget-logo" src="imgs/logo.jpg "></span>
+
+        <div id="widget-popup-container" style="display: none;">
+            <div class="feature-window" id="HomeDiv" style="display: block;">
+                <p class="feature-heading">WHAT CAN I HELP YOU WITH?</p>
+                <div class="feature-content">
+                    <form class="searchbox">
+                        <input type="text" placeholder="Search">
+                        <button type="button"><i class="fa fa-search"></i></button>
+                    </form>
+                    <ul>
+                        <li data-id="chatbot" onclick="ToggleWindow(this)">
+                            <img data-id="chatbot" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">CHAT WITH US</li>
+                        <li data-id="feedback" onclick="ToggleWindow(this)">
+                            <img data-id="feedback" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">GOT A FEEDBACK?</li>
+                        <li data-id="reportbug" onclick="ToggleWindow(this)">
+                            <img data-id="reportbug" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">REPORT A BUG</li>
+                        <li data-id="announcements" onclick="ToggleWindow(this)">
+                            <img data-id="announcements" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">CHECK ANNOUNCEMENT</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-window" id="ChatbotDiv" style="display: none;">
+                <i class="fa fa-home" onclick="GoHome();"></i>
+                <p class="feature-heading">CHATBOT</p>
+                <div class="feature-content">
+
+                </div>
+            </div>
+
+            <div class="feature-window" id="FeedbackDiv" style="display: none;">
+                <i class="fa fa-home" onclick="GoHome();"></i>
+                <p class="feature-heading">GIVE A FEEDBACK</p>
+                <div class="feature-content">
+                    <form name="feedbackform" class="align-form">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" id="feedbackTitleInput" placeholder="Enter a title">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" id="feedbackDescInput" placeholder="Feedback Description">
+                        </div>
+                        <div style="text-align: center;"><button type="submit" class="btn btn-primary" onclick="SendFeedback();">Submit</button></div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="feature-window" id="ReportBugDiv" style="display: none;">
+                <i class="fa fa-home" onclick="GoHome();"></i>
+                <p class="feature-heading">REPORT A BUG</p>
+                <div class="feature-content">
+                    <form name="reportbugform" class="align-form">
+                        <div class="form-group">
+                            <label>Issue Type</label>
+                            <input type="text" class="form-control" id="issuetype" placeholder="Enter issue type">
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" id="issue" placeholder="Enter issue title">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" id="desc" placeholder="Description">
+
+                            <div style="text-align: center;"><button type="submit" class="btn btn-primary" onclick="SendReport();">Submit</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="feature-window" id="AnnouncementDiv" style="display: none;">
+                <i class="fa fa-home" onclick="GoHome();"></i>
+                <p class="feature-heading">ANNOUNCEMENTS</p>
+                <div class="feature-content">
+                    <ul>
+                        <!--Make it a scrolling view-->
+                        <li>Test1 announcement</li>
+                        <li>Test2 announcement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-window" id="loginDiv" style="display: none;">
+                <p class="feature-heading">SIGNIN</p>
+                <div class="feature-content">
+                    <form name="loginform" class="align-form">
+                        <div class="form-group">
+                            <label>EMAIL-ID</label>
+                            <input type="text" class="form-control" id="emailidInput" placeholder="example@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>PASSWORD</label>
+                            <input type="password" class="form-control" id="passwordInput" placeholder="password">
+                        </div>
+                        <div style="text-align: center;"><button type="submit" class="btn btn-primary" onclick="login();">SIGNIN</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
+
 <script>
-    function ExpandWidget() {}
+    function SendFeedback() {
+        alert("It worked");
+    }
+
+    function SendReport() {
+        alert("It worked");
+    }
+
+    function ExpandWidget() {
+        if (document.getElementById("widget-popup-container").style.display == "none") {
+            document.getElementById("widget-popup-container").style.display = "block";
+        } else {
+            document.getElementById("widget-popup-container").style.display = "none";
+        }
+    }
+
+    function ToggleWindow(elem) {
+        console.log("Enter")
+        var element_id = elem.getAttribute("data-id");
+        console.log(element_id);
+        if (element_id == "chatbot") {
+            document.getElementById("HomeDiv").style.display = "none";
+            document.getElementById("ChatbotDiv").style.display = "block";
+            document.getElementById("FeedbackDiv").style.display = "none";
+            document.getElementById("ReportBugDiv").style.display = "none";
+            document.getElementById("AnnouncementDiv").style.display = "none";
+        } else if (element_id == "feedback") {
+            document.getElementById("HomeDiv").style.display = "none";
+            document.getElementById("ChatbotDiv").style.display = "none";
+            document.getElementById("FeedbackDiv").style.display = "block";
+            document.getElementById("ReportBugDiv").style.display = "none";
+            document.getElementById("AnnouncementDiv").style.display = "none";
+        } else if (element_id == "reportbug") {
+            document.getElementById("HomeDiv").style.display = "none";
+            document.getElementById("ChatbotDiv").style.display = "none";
+            document.getElementById("FeedbackDiv").style.display = "none";
+            document.getElementById("ReportBugDiv").style.display = "block";
+            document.getElementById("AnnouncementDiv").style.display = "none";
+        } else if (element_id == "announcements") {
+            document.getElementById("HomeDiv").style.display = "none";
+            document.getElementById("ChatbotDiv").style.display = "none";
+            document.getElementById("FeedbackDiv").style.display = "none";
+            document.getElementById("ReportBugDiv").style.display = "none";
+            document.getElementById("AnnouncementDiv").style.display = "block";
+        }
+    }
+
+    function GoHome() {
+        document.getElementById("HomeDiv").style.display = "block";
+        document.getElementById("ChatbotDiv").style.display = "none";
+        document.getElementById("FeedbackDiv").style.display = "none";
+        document.getElementById("ReportBugDiv").style.display = "none";
+        document.getElementById("AnnouncementDiv").style.display = "none";
+    }
 </script>
 
 </html>
