@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(#7d6cfc, #c635ea)
+}
+
+.action {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action span {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #a13dea;
+    transition: 0.3s ease-in-out
+}
+
+.action.active span {
+    transform: rotate(120deg)
+}
+
+.action ul {
+    position: absolute;
+    bottom: 55px;
+    background: #fff;
+    min-width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.action.active ul {
+    bottom: 65px;
+    right: 50px;
+    opacity: 1;
+    visibility: visible;
+    transition: 0.3s;
+}
+
+.action.active ul li {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    transition: 0.3s;
+}
+
+.action ul li:hover {
+    font-weight: 600;
+}
+
+.action ul li:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.action ul li img {
+    margin-right: 10px;
+    opacity: 0.2;
+    transform: scale(0.8);
+}
+
+.action ul li:hover img {
+    opacity: 0.8;
+}
+
+form.searchbox {
+    width: 100%;
+    height: 40px;
+}
+
+form.searchbox input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    height: 100%;
+    background: #f1f1f1;
+}
+
+form.searchbox button {
+    float: left;
+    width: 20%;
+    height: 100%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.searchbox button:hover {
+    background: #0b7dda;
+}
+
+form.searchbox::after {
+    content: "";
+    clear: both;
+    display: table;
+}

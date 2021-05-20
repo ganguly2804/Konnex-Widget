@@ -1,0 +1,102 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Widget</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<script language="javascript" type="text/javascript">
+    var wsUri = "wss://airbus-hackathon-backend.ganeshkumar269.repl.co/";
+
+    function displayKeywordChoices(keywords) {
+        var list = document.getElementById('list');
+        for (var i = 0; i < keywords.length; i++) {
+            list.innerHTML += "<li>" + keywords[i] + "</li>";
+        }
+    }
+
+    function initSocket() {
+        console.log("Socket setup");
+        websocket = new WebSocket(wsUri);
+
+        websocket.onopen = function(evt) {
+            console.log("CONNECTED");
+        };
+
+        websocket.onmessage = function(evt) {
+            console.log(evt.data);
+            //websocket.close();
+            displayKeywordChoices(evt.data);
+        };
+
+        websocket.onerror = function(evt) {
+            console.log(evt.data);
+        };
+
+        console.log("EVENTS SETUP DONE")
+    }
+
+    function sendText() {
+        var text = document.navform.search.value;
+        if (text != "") {
+            var jsonMsg = {
+                "navsearch": true,
+                "searchText": text
+            };
+            var strJson = JSON.stringify(jsonMsg);
+
+            console.log("TRYING TO SEND: " + strJson);
+
+            websocket.send(strJson);
+
+            console.log("SENT: " + strJson);
+        }
+    }
+
+    window.addEventListener("load", initSocket, false);
+</script>
+
+<body>
+    <p>
+        Widget
+    </p>
+
+    <form class="container form" name="navform">
+        <input class="form-control text-center" type="search" id="search" placeholder="Search" onkeyup="sendText();">
+        <ul class="predtext" id="list">
+        </ul>
+        <button class="btn text-center" type="button" id="button"><span class="fa fa-search">&nbsp;&nbsp;&nbsp;SUBMIT</span></button>
+    </form>
+
+    <div class="action" onclick="actionToggle(); ">
+        <span>+</span>
+        <ul>
+            WHAT CAN I HELP YOU WITH?
+            <li>
+                <form name="navform2">
+                    <input type="text" placeholder="Search" name="search1">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </li>
+            <li>
+                <img src="../logo.jpg ">CHAT</li>
+            <li>
+                <img src="../logo.jpg ">FEEDBACK</li>
+            <li>
+                <img src="../logo.jpg ">REPORT A BUG</li>
+            <li>
+                <img src="../logo.jpg ">ANNOUNCEMENT</li>
+        </ul>
+    </div>
+    <script>
+        function actionToggle() {
+            var action = document.querySelector('.action');
+            action.classList.toggle('active')
+        }
+    </script>
+</body>
+
+</html>
