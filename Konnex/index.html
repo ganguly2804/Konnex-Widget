@@ -10,8 +10,11 @@
 
 </head>
 <script language="javascript" type="text/javascript">
-    var wsUri = "wss://airbus-hackathon-backend.ganeshkumar269.repl.co/?website_id=12233";
-    var WEBSOCKETFLAG = ""
+    var WEBSITEID = "12233";
+    var wsUri = "wss://airbus-hackathon-backend.ganeshkumar269.repl.co/?website_id=" + WEBSITEID;
+    var WEBSOCKETFLAG = "";
+    var NAVIGATETO = "";
+    var TOKEN = "";
 
     function displayKeywordChoices(keywords) {
         var list = document.getElementById('pred-list');
@@ -27,6 +30,7 @@
     function NavigateToWebpage() {}
 
     function initSocket() {
+
         console.log("Socket setup");
         websocket = new WebSocket(wsUri);
 
@@ -83,19 +87,19 @@
                 <p class="feature-heading">WHAT CAN I HELP YOU WITH?</p>
                 <div class="feature-content">
                     <form class="searchbox" name="navform">
-                        <input list="pred-list" type="text" id="navsearch" placeholder="Search" onkeyup="sendText();">
+                        <input list="pred-list" type="text" id="navsearch" placeholder="Navigate on the website..." onkeyup="sendText();">
                         <datalist id="pred-list"></datalist>
                         <button type="button" onclick="NavigateToWebpage();"><i class="fa fa-search"></i></button>
                     </form>
                     <ul>
                         <li data-id="chatbot" onclick="ToggleWindow(this)">
-                            <img data-id="chatbot" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">CHAT WITH US</li>
+                            <img data-id="chatbot" src="imgs/bot.png " width="35px" height="35px" onclick="ToggleWindow(this)">CHAT WITH US</li>
                         <li data-id="feedback" onclick="ToggleWindow(this)">
-                            <img data-id="feedback" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">GOT A FEEDBACK?</li>
+                            <img data-id="feedback" src="imgs/idea.png " width="35px" height="35px" onclick="ToggleWindow(this)">GOT A FEEDBACK?</li>
                         <li data-id="reportbug" onclick="ToggleWindow(this)">
-                            <img data-id="reportbug" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">REPORT A BUG</li>
+                            <img data-id="reportbug" src="imgs/bug.png " width="35px" height="35px" onclick="ToggleWindow(this)">REPORT A BUG</li>
                         <li data-id="announcements" onclick="ToggleWindow(this)">
-                            <img data-id="announcements" src="imgs/logo.jpg " width="30px" height="30px" onclick="ToggleWindow(this)">CHECK ANNOUNCEMENT</li>
+                            <img data-id="announcements" src="imgs/announce.png " width="35px" height="35px" onclick="ToggleWindow(this)">CHECK ANNOUNCEMENT</li>
                     </ul>
                 </div>
             </div>
@@ -154,8 +158,7 @@
             </div>
 
             <div class="feature-window" id="FeedbackDiv" style="display: none;">
-                <i class="fa fa-home" onclick="GoHome();"></i>
-                <p class="feature-heading">GIVE A FEEDBACK</p>
+                <p class="feature-heading"><span style="float: left;"><i class="fa fa-home" onclick="GoHome();"></i></span>GIVE A FEEDBACK</p>
                 <div class="feature-content">
                     <form name="feedbackform" class="align-form">
                         <div class="form-group">
@@ -172,43 +175,32 @@
             </div>
 
             <div class="feature-window" id="ReportBugDiv" style="display: none;">
-                <i class="fa fa-home" onclick="GoHome();"></i>
-                <p class="feature-heading">REPORT A BUG</p>
+                <p class="feature-heading"><span style="float: left;"><i class="fa fa-home" onclick="GoHome();"></i></span>REPORT A BUG</p>
                 <div class="feature-content">
                     <form name="reportbugform" class="align-form">
                         <div class="form-group">
-                            <label>Issue Type</label>
-                            <input type="text" class="form-control" id="issuetype" placeholder="Enter issue type">
-                        </div>
-                        <div class="form-group">
                             <label>Title</label>
-                            <input type="text" class="form-control" id="issue" placeholder="Enter issue title">
+                            <input type="text" class="form-control" id="reportTitleInput" placeholder="Enter issue title">
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control" id="desc" placeholder="Description">
-
-                            <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="SendReport();">Submit</button></div>
+                            <input type="text" class="form-control" id="reportDescInput" placeholder="Description">
                         </div>
+                        <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="SendReport();">Submit</button></div>
                     </form>
                 </div>
             </div>
 
             <div class="feature-window" id="AnnouncementDiv" style="display: none;">
-                <i class="fa fa-home" onclick="GoHome();"></i>
-                <p class="feature-heading">ANNOUNCEMENTS</p>
+                <p class="feature-heading"><span style="float: left;"><i class="fa fa-home" onclick="GoHome();"></i></span>ANNOUNCEMENTS</p>
                 <div class="feature-content">
-                    <ul>
-                        <!--Make it a scrolling view-->
-                        <li>Test1 announcement</li>
-                        <li>Test2 announcement</li>
+                    <ul id="announcementsList">
                     </ul>
                 </div>
             </div>
 
             <div class="feature-window" id="loginDiv" style="display: none;">
-                <i class="fa fa-home" onclick="GoHome();"></i>
-                <p class="feature-heading">SIGNIN</p>
+                <p class="feature-heading"><span style="float: left;"><i class="fa fa-home" onclick="GoHome();"></i></span>SIGNIN</p>
                 <div class="feature-content">
                     <form name="loginform" class="align-form">
                         <div class="form-group">
@@ -219,7 +211,7 @@
                             <label>PASSWORD</label>
                             <input type="password" class="form-control" id="passwordInput" placeholder="password">
                         </div>
-                        <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="login();">SIGNIN</button></div>
+                        <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="submitLoginForm();">SIGNIN</button></div>
                     </form>
                 </div>
             </div>
@@ -227,8 +219,58 @@
     </div>
 
 </body>
-<!--<script type="text/javascript" src="./chatIndex.js"></script>-->
 <script type="text/javascript">
+    function CheckLogin() {
+        var token = window.localStorage.getItem("token");
+        if (token == null) {
+            document.getElementById("HomeDiv").style.display = "none";
+            document.getElementById("loginDiv").style.display = "block";
+        } else {
+            console.log("REDIRECTING TO " + NAVIGATETO);
+            document.getElementById("HomeDiv").style.display = "none";
+            document.getElementById(NAVIGATETO).style.display = "block";
+        }
+    }
+
+    function submitLoginForm() {
+        var user_email = document.getElementById("emailidInput").value
+        var user_password = document.getElementById("passwordInput").value
+
+        if (user_email && user_password) {
+            var url = 'https://airbus-hackathon-backend.ganeshkumar269.repl.co/api/v1/login';
+            var jsonDetails = {
+                "website_id": "12233",
+                "email": user_email,
+                "password": user_password
+            }
+            console.log("Will try to send login details ", jsonDetails);
+
+            async function loginData() {
+                let response = await fetch(
+                    url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(jsonDetails)
+                    }
+                );
+                let data = await response.json();
+                return data;
+            }
+            loginData().then(data => SetToken(data.token));
+
+            document.getElementById("loginDiv").style.display = "none";
+            document.getElementById(NAVIGATETO).style.display = "block";
+        }
+    }
+
+    function SetToken(tokenData) {
+        console.log(tokenData);
+        TOKEN = tokenData;
+        window.localStorage.setItem('token', TOKEN);
+    }
+
     function ChatResp() {
         var text = document.getElementById("inputChatbox").value;
         console.log(text);
@@ -249,11 +291,100 @@
     }
 
     function SendFeedback() {
-        //alert("It worked");
+        var url = 'https://airbus-hackathon-backend.ganeshkumar269.repl.co/api/v1/feedback';
+        var feedbackStr = document.getElementById("feedbackTitleInput").value;
+        var feedbackDescStr = document.getElementById("feedbackDescInput").value;
+        if (feedbackStr && feedbackDescStr) {
+
+            var user_email = "example@email.com";
+            feedback = {
+                "website_id": WEBSITEID,
+                "email": user_email,
+                "feedbackTitle": feedbackStr,
+                "feedbackDesc": feedbackDescStr
+            }
+
+            console.log("Will try to send feedback ", feedback);
+
+            async function postFeedbackData() {
+                let response = await fetch(
+                    url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + TOKEN
+                        },
+                        body: JSON.stringify(feedback)
+                    }
+                );
+                let data = await response.json();
+                return data;
+            }
+            postFeedbackData().then(data => console.log("Request complete! response:", data));
+        }
     }
 
     function SendReport() {
-        //alert("It worked");
+        var url = 'https://airbus-hackathon-backend.ganeshkumar269.repl.co/api/v1/bugreport';
+        var reportStr = document.getElementById("reportTitleInput").value;
+        var reportDescStr = document.getElementById("reportDescInput").value;
+        if (reportStr && reportDescStr) {
+            console.log("About to send report")
+
+            var user_email = "example@email.com";
+            bugReport = {
+                "website_id": WEBSITEID,
+                "email": user_email,
+                "bugReportTitle": reportStr,
+                "bugReportDesc": reportDescStr
+            }
+
+            console.log("Will try to send report ", bugReport);
+
+            async function postReportData() {
+                let response = await fetch(
+                    url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + TOKEN
+                        },
+                        body: JSON.stringify(bugReport)
+                    }
+                );
+                let data = await response.json();
+                return data;
+            }
+            postReportData().then(data => console.log("Request complete! response:", data));
+        }
+    }
+
+    function GetAnnouncements() {
+        async function getAnnouncementData() {
+            var url = 'https://airbus-hackathon-backend.ganeshkumar269.repl.co/api/v1/announcement?website_id=' + WEBSITEID;
+            let response = await fetch(
+                url, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + TOKEN
+                    }
+                }
+            );
+            let data = await response.json();
+            return data;
+        }
+        getAnnouncementData().then(data => AnnouncementActions(data));
+    }
+
+    function AnnouncementActions(data) {
+        console.log("Announcements:", data);
+        var announcementsList = document.getElementById('announcementsList');
+        announcementsList.innerHTML = "";
+
+        for (var i = 0; i < data.length; i++) {
+            announcementsList.innerHTML += "<li>" + data[i] + "</li>";
+        }
     }
 
     function ExpandWidget() {
@@ -269,33 +400,24 @@
         var element_id = elem.getAttribute("data-id");
         console.log(element_id);
         if (element_id == "chatbot") {
-            document.getElementById("HomeDiv").style.display = "none";
-            document.getElementById("ChatbotDiv").style.display = "block";
-            document.getElementById("FeedbackDiv").style.display = "none";
-            document.getElementById("ReportBugDiv").style.display = "none";
-            document.getElementById("AnnouncementDiv").style.display = "none";
+            NAVIGATETO = "ChatbotDiv";
+            CheckLogin();
         } else if (element_id == "feedback") {
-            document.getElementById("HomeDiv").style.display = "none";
-            document.getElementById("ChatbotDiv").style.display = "none";
-            document.getElementById("FeedbackDiv").style.display = "block";
-            document.getElementById("ReportBugDiv").style.display = "none";
-            document.getElementById("AnnouncementDiv").style.display = "none";
+            NAVIGATETO = "FeedbackDiv";
+            CheckLogin();
         } else if (element_id == "reportbug") {
-            document.getElementById("HomeDiv").style.display = "none";
-            document.getElementById("ChatbotDiv").style.display = "none";
-            document.getElementById("FeedbackDiv").style.display = "none";
-            document.getElementById("ReportBugDiv").style.display = "block";
-            document.getElementById("AnnouncementDiv").style.display = "none";
+            NAVIGATETO = "ReportBugDiv";
+            CheckLogin();
         } else if (element_id == "announcements") {
+            NAVIGATETO = "AnnouncementDiv";
+            GetAnnouncements();
             document.getElementById("HomeDiv").style.display = "none";
-            document.getElementById("ChatbotDiv").style.display = "none";
-            document.getElementById("FeedbackDiv").style.display = "none";
-            document.getElementById("ReportBugDiv").style.display = "none";
             document.getElementById("AnnouncementDiv").style.display = "block";
         }
     }
 
     function GoHome() {
+        NAVIGATETO = "HomeDiv";
         document.getElementById("HomeDiv").style.display = "block";
         document.getElementById("ChatbotDiv").style.display = "none";
         document.getElementById("FeedbackDiv").style.display = "none";
@@ -307,15 +429,6 @@
     let msgerInput = get(".msger-input");
     let msgerChat = get(".msger-chat");
 
-    const BOT_MSGS = [
-        "Hi, how are you?",
-        "Ohh... I can't understand what you trying to say. Sorry!",
-        "I like to play games... But I don't know how to play!",
-        "Sorry if my answers are not relevant. :))",
-        "I feel sleepy! :("
-    ];
-
-    // Icons made by Freepik from www.flaticon.com
     const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
     const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
     const BOT_NAME = "BOT";
@@ -323,18 +436,13 @@
 
     msgerForm.addEventListener("submit", event => {
         event.preventDefault();
-
         const msgText = msgerInput.value;
         if (!msgText) return;
-
         appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
         msgerInput.value = "";
-
-
     });
 
     function appendMessage(name, img, side, text) {
-        //   Simple solution for small apps
         const msgHTML = `
                 <div class="msg ${side}-msg">
                 <div class="msg-img" style="background-image: url(${img})"></div>
@@ -355,8 +463,6 @@
     }
 
     function botResponse(msgText) {
-        /*const r = random(0, BOT_MSGS.length - 1);
-        const msgText = BOT_MSGS[r];*/
         const delay = msgText.split(" ").length * 100;
 
         setTimeout(() => {
@@ -364,7 +470,6 @@
         }, delay);
     }
 
-    // Utils
     function get(selector, root = document) {
         return root.querySelector(selector);
     }
@@ -380,5 +485,7 @@
         return Math.floor(Math.random() * (max - min) + min);
     }
 </script>
+
+</html>
 
 </html>
