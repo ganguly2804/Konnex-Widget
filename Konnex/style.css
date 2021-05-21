@@ -51,6 +51,7 @@ body {
 .feature-heading {
     font-size: 20px;
     text-align: center;
+    width: 100%;
 }
 
 .feature-content ul {

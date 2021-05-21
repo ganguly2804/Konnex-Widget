@@ -16,7 +16,7 @@ const BOT_MSGS = [
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
 const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
 const BOT_NAME = "BOT";
-const PERSON_NAME = "Sajad";
+const PERSON_NAME = "YOU";
 
 msgerForm.addEventListener("submit", event => {
   event.preventDefault();
@@ -27,7 +27,7 @@ msgerForm.addEventListener("submit", event => {
   appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
   msgerInput.value = "";
 
-  botResponse();
+  
 });
 
 // let chatResp = ((e)=>{
@@ -63,9 +63,9 @@ function appendMessage(name, img, side, text) {
   msgerChat.scrollTop += 500;
 }
 
-function botResponse() {
-  const r = random(0, BOT_MSGS.length - 1);
-  const msgText = BOT_MSGS[r];
+function botResponse(msgText) {
+  /*const r = random(0, BOT_MSGS.length - 1);
+  const msgText = BOT_MSGS[r];*/
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
