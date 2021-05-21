@@ -4,11 +4,14 @@
 <head>
     <title>Konnex Widget</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chatStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    
 </head>
 
 <body>
+    
     <div id="widget-container">
 
         <span id="widget-button" onclick="ExpandWidget();"><img id="widget-logo" src="imgs/logo.jpg "></span>
@@ -36,9 +39,61 @@
 
             <div class="feature-window" id="ChatbotDiv" style="display: none;">
                 <i class="fa fa-home" onclick="GoHome();"></i>
-                <p class="feature-heading">CHATBOT</p>
+                <!-- <p class="feature-heading">CHATBOT</p> -->
                 <div class="feature-content">
-
+                    <section class="msger">
+                        <header class="msger-header">
+                          <div class="msger-header-title">
+                            <i class="fas fa-comment-alt"></i> SimpleChat
+                          </div>
+                          <div class="msger-header-options">
+                            <span><i class="fas fa-cog"></i></span>
+                          </div>
+                        </header>
+                      
+                        <main class="msger-chat">
+                          <div class="msg left-msg">
+                            <div
+                             class="msg-img"
+                             style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
+                            ></div>
+                      
+                            <div class="msg-bubble">
+                              <div class="msg-info">
+                                <div class="msg-info-name">BOT</div>
+                                <div class="msg-info-time">12:45</div>
+                              </div>
+                      
+                              <div class="msg-text">
+                                Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+                              </div>
+                            </div>
+                          </div>
+                      
+                          <div class="msg right-msg">
+                            <div
+                             class="msg-img"
+                             style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
+                            ></div>
+                      
+                            <div class="msg-bubble">
+                              <div class="msg-info">
+                                <div class="msg-info-name">Sajad</div>
+                                <div class="msg-info-time">12:46</div>
+                              </div>
+                      
+                              <div class="msg-text">
+                                You can change your name in JS section!
+                              </div>
+                            </div>
+                          </div>
+                        </main>
+                      
+                        <form class="msger-inputarea">
+                          <input type="text" class="msger-input" placeholder="Enter your message...">
+                          <button type="submit" onclick="chatResp();" class="msger-send-btn">Send</button>
+                        </form>
+                      </section>
                 </div>
             </div>
 
@@ -113,9 +168,8 @@
             </div>
         </div>
     </div>
-
+    <script src = "./chatIndex.js"></script>
 </body>
-
 <script>
     function SendFeedback() {
         alert("It worked");
@@ -143,6 +197,9 @@
             document.getElementById("FeedbackDiv").style.display = "none";
             document.getElementById("ReportBugDiv").style.display = "none";
             document.getElementById("AnnouncementDiv").style.display = "none";
+
+            startChatting();
+
         } else if (element_id == "feedback") {
             document.getElementById("HomeDiv").style.display = "none";
             document.getElementById("ChatbotDiv").style.display = "none";
