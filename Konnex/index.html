@@ -7,6 +7,59 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 </head>
+<script language="javascript" type="text/javascript">
+    var wsUri = "wss://airbus-hackathon-backend.ganeshkumar269.repl.co/?website_id=12233";
+
+    function displayKeywordChoices(keywords) {
+        var jsonKeywords = JSON.parse(keywords);
+        console.log(keywords);
+        for (var key in jsonKeywords) {
+            console.log(key);
+        }
+        /*var list = document.getElementById('list');
+        for (var i = 0; i < keywords.length; i++) {
+            list.innerHTML += "<li>" + keywords[i] + "</li>";
+        }*/
+    }
+
+    function initSocket() {
+        console.log("Socket setup");
+        websocket = new WebSocket(wsUri);
+
+        websocket.onopen = function(evt) {
+            console.log("CONNECTED");
+        };
+
+        websocket.onmessage = function(evt) {
+            displayKeywordChoices(evt.data);
+        };
+
+        websocket.onerror = function(evt) {
+            console.log(evt.data);
+        };
+
+        console.log("EVENTS SETUP DONE")
+    }
+
+    function sendText() {
+        var text = document.navform.navsearch.value;
+        if (text != "") {
+            var jsonMsg = {
+                "navsearch": true,
+                "searchText": text
+            };
+            var strJson = JSON.stringify(jsonMsg);
+
+            console.log("TRYING TO SEND: " + strJson);
+
+            websocket.send(strJson);
+
+            console.log("SENT: " + strJson);
+        }
+    }
+
+    window.addEventListener("load", initSocket, false);
+</script>
 
 <body>
     <div id="widget-container">
@@ -17,8 +70,8 @@
             <div class="feature-window" id="HomeDiv" style="display: block;">
                 <p class="feature-heading">WHAT CAN I HELP YOU WITH?</p>
                 <div class="feature-content">
-                    <form class="searchbox">
-                        <input type="text" placeholder="Search">
+                    <form class="searchbox" name="navform">
+                        <input type="text" id="navsearch" placeholder="Search" onkeyup="sendText();">
                         <button type="button"><i class="fa fa-search"></i></button>
                     </form>
                     <ul>
@@ -55,7 +108,7 @@
                             <label>Description</label>
                             <input type="text" class="form-control" id="feedbackDescInput" placeholder="Feedback Description">
                         </div>
-                        <div style="text-align: center;"><button type="submit" class="btn btn-primary" onclick="SendFeedback();">Submit</button></div>
+                        <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="SendFeedback();">Submit</button></div>
                     </form>
                 </div>
             </div>
@@ -77,7 +130,7 @@
                             <label>Description</label>
                             <input type="text" class="form-control" id="desc" placeholder="Description">
 
-                            <div style="text-align: center;"><button type="submit" class="btn btn-primary" onclick="SendReport();">Submit</button></div>
+                            <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="SendReport();">Submit</button></div>
                         </div>
                     </form>
                 </div>
@@ -107,7 +160,7 @@
                             <label>PASSWORD</label>
                             <input type="password" class="form-control" id="passwordInput" placeholder="password">
                         </div>
-                        <div style="text-align: center;"><button type="submit" class="btn btn-primary" onclick="login();">SIGNIN</button></div>
+                        <div style="text-align: center;"><button type="button" class="btn btn-primary" onclick="login();">SIGNIN</button></div>
                     </form>
                 </div>
             </div>
@@ -118,11 +171,11 @@
 
 <script>
     function SendFeedback() {
-        alert("It worked");
+        //alert("It worked");
     }
 
     function SendReport() {
-        alert("It worked");
+        //alert("It worked");
     }
 
     function ExpandWidget() {
@@ -146,7 +199,7 @@
         } else if (element_id == "feedback") {
             document.getElementById("HomeDiv").style.display = "none";
             document.getElementById("ChatbotDiv").style.display = "none";
-            document.getElementById("FeedbackDiv").style.display = "block";
+            document.getElementById("loginDiv").style.display = "block";
             document.getElementById("ReportBugDiv").style.display = "none";
             document.getElementById("AnnouncementDiv").style.display = "none";
         } else if (element_id == "reportbug") {
