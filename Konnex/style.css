@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
-
 body {
-    background-image: url("../../backgd.jpg");
+    background-color: rosybrown;
 }
 
 #widget-container {
@@ -46,6 +40,8 @@ body {
     border-radius: 10%;
     background: #fff;
     padding: 20px;
+    border: 1px solid black;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
 }
 
 .feature-heading {
@@ -121,4 +117,19 @@ form.searchbox::after {
     content: "";
     clear: both;
     display: table;
+}
+
+#ChatbotDiv {
+    height: 100%;
+}
+
+#chatbotsubdiv {
+    height: 85%;
+}
+
+.demo {
+    font-size: 100px;
+    text-align: center;
+    padding: 100px;
+    margin: 50px;
 }

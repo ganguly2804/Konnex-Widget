@@ -15,12 +15,12 @@
 
 <body>
     <div class="w3-bar w3-black">
-        <a href="#" class="w3-bar-item w3-button">Home</a>
-        <a href="./contactus.html" class="w3-bar-item w3-button">Contact Us</a>
+        <a href="./index.html" class="w3-bar-item w3-button">Home</a>
+        <a href="#" class="w3-bar-item w3-button">Contact Us</a>
         <a href="./aboutus.html" class="w3-bar-item w3-button">About Us</a>
     </div>
 
-    <p class="demo">HOME PAGE DEMO</p>
+    <p class="demo">CONTACT US DEMO</p>
 
     <div id="widget-container">
         <span id="widget-button" onclick="ExpandWidget();"><img id="widget-logo" src="imgs/logo.jpg "></span>
@@ -133,7 +133,7 @@
             </div>
 
             <div class="feature-window" id="loginDiv" style="display: none;">
-                <p class="feature-heading"><span style="float: left;"><i class="fa fa-home" onclick="GoHome();"></i></span>SIGNIN</p>
+                <p class="feature-heading"><span style="float: left;"><i class="fa fa-home" onclick="GoHome();"></i></span> YOU NEED TO SIGN-IN</p>
                 <div class="feature-content">
                     <form name="loginform" class="align-form">
                         <div class="form-group">
@@ -175,7 +175,7 @@
             var userkey = document.getElementById("navsearch").value;
             //var urlnav = URLKEYWORDS[userkey][0];
             //console.log(urlnav);
-            window.open('./contactus.html', '_blank');
+            window.open('./aboutus.html', '_blank');
         }
 
         function initSocket() {
@@ -420,10 +420,6 @@
         }
 
         function ExpandWidget() {
-            if (INTROFLAG == 0) {
-                intro.start();
-                INTROFLAG = 1;
-            }
 
             if (document.getElementById("widget-popup-container").style.display == "none") {
                 document.getElementById("widget-popup-container").style.display = "block";
@@ -522,28 +518,6 @@
         function random(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
-        const intro = introJs();
-        var INTROFLAG = 0;
-        intro.setOptions({
-            steps: [{
-                intro: "Welcome to Konnex widget! Let\'s take a tour"
-            }, {
-                element: "#searchIntro",
-                intro: "You can navigate to somewhere on your website through this search bar"
-            }, {
-                element: "#chatIntro",
-                intro: "Ask us what you'd like to know about"
-            }, {
-                element: "#feedbackIntro",
-                intro: "We'd love to hear your ideas and feedbacks so we can improve the website"
-            }, {
-                element: "#bugIntro",
-                intro: "If you find an issue or a bug somewhere on the website, you can report here"
-            }, {
-                element: "#announcementIntro",
-                intro: "You can find website admin's announcements here"
-            }]
-        })
     </script>
 </body>
 
